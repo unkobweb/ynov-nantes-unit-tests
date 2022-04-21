@@ -20,7 +20,7 @@ docker-compose up -d
 docker-compose exec test-temp-tracker composer install
 
 # flatten tests
-docker-compose exec test-temp-tracker ./vendor/phpunit/phpunit/phpunit tests/flatten_test.php
+docker-compose exec test-temp-tracker ./vendor/phpunit/phpunit/phpunit tests/FlattenTest.php
 # tempTracker test
 docker-compose exec test-temp-tracker ./vendor/phpunit/phpunit/phpunit tests/TempTrackerTest.php
 ```
