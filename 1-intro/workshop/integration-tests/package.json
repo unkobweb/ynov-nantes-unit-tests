@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "all": " node server.js & jest --watchAll --colors --coverage",
-    "test": "jest --watchAll --colors --coverage",
+    "all": " node server.js & jest --watchAll --colors --coverage --runInBand",
+    "test": "jest --watchAll --colors --coverage --runInBand",
     "server": "node server.js"
   },
   "author": "",
