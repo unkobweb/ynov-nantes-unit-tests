@@ -2,10 +2,20 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once('./src/TempTracker.php');
-
 class TempTrackerTest extends TestCase {
+
     public function test_something() {
-        $this->assertEqual(42, 42);
+        $this->assertSame(42, 42);
     }
+
+    public function test_add_bad_type_temp() {
+        $tempTracker = new TempTracker();
+        $tempTracker->insert('12');
+    }
+
+    // TODO test insert parameter should be an int
+
+    // TODO test insert with in range 0 110
+
+    // TODO test insert with
 }
