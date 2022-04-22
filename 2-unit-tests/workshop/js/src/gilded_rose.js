@@ -68,7 +68,13 @@ class Shop {
           break;
 
         default:
-          const degradation = this.items[i].sellIn < 0 ? -2 : -1;
+          let degradation = this.items[i].sellIn < 0 ? -2 : -1;
+
+          // If item is conjured, degrade twice as fast
+          if (this.items[i].name.toLowerCase().includes('conjured')) {
+            degradation *= 2;
+          }
+
           this.items[i].quality = this.modifyQuality(this.items[i].quality, degradation);
           break;
       }

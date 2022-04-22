@@ -137,4 +137,12 @@ describe("Gilded Rose", function() {
 
   // BONUS
   // TODO : les éléments "Conjured" voient leur qualité se dégrader de deux fois plus vite que les objets normaux.
+  it('should decrease quality twice as fast when item is "Conjured"', () => {
+    const gildedRose = new Shop([new Item("Conjured", 10, 10), new Item("Conjured", -1, 1)]);
+    gildedRose.updateQuality();
+    expect(gildedRose.items[0].sellIn).toBe(9);
+    expect(gildedRose.items[0].quality).toBe(8);
+    expect(gildedRose.items[1].sellIn).toBe(-2);
+    expect(gildedRose.items[1].quality).toBe(0);
+  })
 });
