@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 class Item {
   constructor(name, sellIn, quality){
     this.name = name;
@@ -9,6 +11,14 @@ class Item {
 class Shop {
   constructor(items=[]){
     this.items = items;
+  }
+
+  writeFile() {
+    try {
+      fs.writeFileSync('gilded_rose.json', JSON.stringify(this.items, null, 2));
+    } catch (error) {
+      throw new Error('Error writing file');
+    }
   }
 
   modifyQuality(quality, amount) {
@@ -79,7 +89,7 @@ class Shop {
           break;
       }
     }
-
+      this.writeFile();
     return this.items;
   }
 }

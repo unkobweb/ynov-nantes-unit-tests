@@ -1,5 +1,9 @@
 const {Shop, Item} = require("../src/gilded_rose");
 
+const fs = require('fs');
+jest.mock('fs');
+const writeFileSpy = fs.writeFileSync.mockImplementation();
+
 describe("Test modifyQuality function", () => {
   const dataSetReturn50 = [
     [45, 9, 50],
@@ -61,8 +65,12 @@ describe("Test isValidItem function", () => {
   
 })
 
-describe("Gilded Rose", function() {
+describe("Gilded Rose update quality", function() {
 
+  afterEach(() => {
+    writeFileSpy.mockClear();
+  })
+  
   const dataSetInvalid = [
     new Item(),
     new Item("Super item"),
@@ -83,6 +91,7 @@ describe("Gilded Rose", function() {
     gildedRose.updateQuality();
     expect(gildedRose.items[0].sellIn).toBe(9);
     expect(gildedRose.items[0].quality).toBe(9);
+    expect(fs.writeFileSync).toBeCalledTimes(1);
   })
 
   // TODO : Une fois que la date de péremption est passée, la qualité se dégrade deux fois plus rapidement.
@@ -91,6 +100,7 @@ describe("Gilded Rose", function() {
     gildedRose.updateQuality();
     expect(gildedRose.items[0].sellIn).toBe(-1);
     expect(gildedRose.items[0].quality).toBe(8);
+    expect(fs.writeFileSync).toBeCalledTimes(1);
   })
 
   // TODO : La qualité (quality) d'un produit ne peut jamais être négative.
@@ -103,6 +113,7 @@ describe("Gilded Rose", function() {
     gildedRose.updateQuality();
     expect(item.sellIn).toBe(expectedSellIn);
     expect(item.quality).toBe(expectedQuality);
+    expect(fs.writeFileSync).toBeCalledTimes(1);
   }) 
 
   // TODO : "Aged Brie" augmente sa qualité (quality) plus le temps passe.
@@ -115,6 +126,7 @@ describe("Gilded Rose", function() {
     gildedRose.updateQuality();
     expect(item.sellIn).toBe(expectedSellIn);
     expect(item.quality).toBe(expectedQuality);
+    expect(fs.writeFileSync).toBeCalledTimes(1);
   })
 
   // TODO : La qualité d'un produit n'est jamais de plus de 50.
@@ -127,6 +139,7 @@ describe("Gilded Rose", function() {
     gildedRose.updateQuality();
     expect(item.sellIn).toBe(expectedSellIn);
     expect(item.quality).toBe(expectedQuality);
+    expect(fs.writeFileSync).toBeCalledTimes(1);
   })
 
   // TODO : "Sulfuras", étant un objet légendaire, n'a pas de date de péremption et ne perd jamais en qualité (quality)
@@ -139,6 +152,7 @@ describe("Gilded Rose", function() {
     gildedRose.updateQuality();
     expect(item.sellIn).toBe(expectedSellIn);
     expect(item.quality).toBe(expectedQuality);
+    expect(fs.writeFileSync).toBeCalledTimes(1);
   })
 
   // TODO : "Backstage passes", comme le "Aged Brie", augmente sa qualité (quality) plus le temps passe (sellIn) ; La qualité augmente de 2 quand il reste 10 jours ou moins et de 3 quand il reste 5 jours ou moins, mais la qualité tombe à 0 après le concert.
@@ -153,6 +167,7 @@ describe("Gilded Rose", function() {
     gildedRose.updateQuality();
     expect(item.sellIn).toBe(expectedSellIn);
     expect(item.quality).toBe(expectedQuality);
+    expect(fs.writeFileSync).toBeCalledTimes(1);
   })
 
   // BONUS
@@ -166,5 +181,26 @@ describe("Gilded Rose", function() {
     gildedRose.updateQuality();
     expect(item.sellIn).toBe(expectedSellIn);
     expect(item.quality).toBe(expectedQuality);
+    expect(fs.writeFileSync).toBeCalledTimes(1);
   })
 });
+
+describe('Gilded rose write file', () => {
+
+  it('write valid file', () => {
+    const gildedRose = new Shop([new Item("Super item", 10, 10)]);
+    gildedRose.writeFile();
+    expect(fs.writeFileSync).toBeCalledTimes(1);
+  })  
+
+  it('write file throw an error', () => {
+    // simulate a write file error
+    fs.writeFileSync.mockImplementation(() => {
+      throw new Error('error')
+    })
+
+    const gildedRose = new Shop([new Item("Super item", 10, 10)]);
+    expect(() => gildedRose.writeFile()).toThrow();
+  })
+    
+})

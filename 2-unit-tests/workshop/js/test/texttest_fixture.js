@@ -30,5 +30,4 @@ function process(shop, func) {
   }
 }
 
-// process(gildedRose, 'updateQuality');
-process(gildedRoseOld, 'updateQualityOld');
+process(gildedRose, 'updateQuality');
