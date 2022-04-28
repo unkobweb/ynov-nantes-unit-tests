@@ -123,4 +123,9 @@ describe("Solving output", () => {
     const result = new Minesweeper("1 8\n.*.*...*\n0 0").solve();
     expect(result).toEqual("Field #1:\n1*2*101*");
   });
+
+  it("should set number instead of '.' with many lines", () => {
+    const result = new Minesweeper("4 4\n*...\n....\n.*..\n....\n0 0").solve();
+    expect(result).toEqual("Field #1:\n*100\n2210\n1*10\n1110");
+  });
 });
