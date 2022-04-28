@@ -118,4 +118,8 @@ describe("Solving output", () => {
       expect(field).toContain(output);
     }
   );
+  it("should set number instead of '.' with just one line", () => {
+    const result = new Minesweeper("1 7\n.*.*...*");
+    expect(result).toEqual("Field #1:\n1*2*101*\n");
+  });
 });
