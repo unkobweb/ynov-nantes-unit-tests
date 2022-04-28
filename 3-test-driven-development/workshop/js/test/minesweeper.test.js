@@ -13,4 +13,18 @@ describe("Read input", () => {
       "First line must be two number separated by a space"
     );
   });
+
+  it("Check if first line number are greater than 0 and lower or equal than 100", () => {
+    expect(() => new Minesweeper("5 -1")).toThrow(
+      "First line numbers must be greater than 0 and lower or equal than 100"
+    );
+    expect(() => new Minesweeper("0 5")).toThrow(
+      "First line numbers must be greater than 0 and lower or equal than 100"
+    );
+    expect(() => new Minesweeper("1 120")).toThrow(
+      "First line numbers must be greater than 0 and lower or equal than 100"
+    );
+    expect(() => new Minesweeper("5 100"));
+    expect(() => new Minesweeper("4 4"));
+  });
 });
