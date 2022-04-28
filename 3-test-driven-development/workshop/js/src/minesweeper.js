@@ -10,6 +10,10 @@ class Minesweeper {
 
     const lines = input.split("\n");
 
+    if (lines.pop() !== "0 0") {
+      throw new Error("Last line must be 0 0");
+    }
+
     const firstLinePattern = new RegExp(
       /^\b([1-9]|[1-9][0-9]|100)\b\s\b([1-9]|[1-9][0-9]|100)\b$/,
       "gm"
