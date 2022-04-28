@@ -64,28 +64,6 @@ class Minesweeper {
     this.checkField(field);
   }
 
-  checkForBombs(line) {
-    let result = "";
-
-    const positions = line.split("");
-    for (let i = 0; i < positions.length; i++) {
-      if (positions[i] === "*") {
-        result += "*";
-      } else {
-        let neerBombs = 0;
-        if (positions[i - 1] === "*") {
-          neerBombs++;
-        }
-        if (positions[i + 1] === "*") {
-          neerBombs++;
-        }
-        result += neerBombs;
-      }
-    }
-
-    return result;
-  }
-
   solve() {
     const lines = this.input.split("\n");
     lines.pop();
@@ -93,7 +71,7 @@ class Minesweeper {
 
     let fieldIndex = 1;
 
-    lines.forEach((line) => {
+    lines.forEach((line, i) => {
       if (this.firstLinePattern.test(line)) {
         if (fieldIndex !== 1) {
           result.push("");
@@ -101,7 +79,63 @@ class Minesweeper {
         result.push(`Field #${fieldIndex}:`);
         fieldIndex++;
       } else {
-        result.push(this.checkForBombs(line));
+        const caracters = line.split("");
+        let resultLine = "";
+
+        caracters.forEach((caracter, j) => {
+          if (caracter === "*") {
+            resultLine += "*";
+          } else {
+            let neerBombs = 0;
+
+            if (lines[i - 1]) {
+              // N
+              if (lines[i - 1].split("")[j] === "*") {
+                neerBombs++;
+              }
+
+              // NW
+              if (lines[i - 1].split("")[j - 1] === "*") {
+                neerBombs++;
+              }
+
+              // NE
+              if (lines[i - 1].split("")[j + 1] === "*") {
+                neerBombs++;
+              }
+            }
+
+            if (lines[i + 1]) {
+              // S
+              if (lines[i + 1].split("")[j] === "*") {
+                neerBombs++;
+              }
+
+              // SW
+              if (lines[i + 1].split("")[j - 1] === "*") {
+                neerBombs++;
+              }
+
+              // SE
+              if (lines[i + 1].split("")[j + 1] === "*") {
+                neerBombs++;
+              }
+            }
+
+            // W
+            if (caracters[j - 1] === "*") {
+              neerBombs++;
+            }
+
+            // E
+            if (caracters[j + 1] === "*") {
+              neerBombs++;
+            }
+
+            resultLine += neerBombs;
+          }
+        });
+        result.push(resultLine);
       }
     });
 
