@@ -21,7 +21,18 @@ class Minesweeper {
       );
     }
 
-    lines.shift();
+    const [linesNb, columnsNb] = lines
+      .shift()
+      .split(" ")
+      .map((nb) => parseInt(nb));
+
+    if (
+      lines.length !== linesNb ||
+      !lines.every((line) => line.length === columnsNb)
+    ) {
+      throw new Error("Lines and columns doesn't match with length expected");
+    }
+
     const planGamePattern = new RegExp(/^(\.|\*)+$/);
 
     if (!lines.every((line) => planGamePattern.test(line))) {

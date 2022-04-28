@@ -18,8 +18,6 @@ describe("Read input", () => {
     ["5 -1", false],
     ["0 5", false],
     ["1 120", false],
-    ["5 100", true],
-    ["4 4", true],
   ];
   it.each(numberValueCheck)(
     "Check if first line number are greater than 0 and lower or equal than 100",
@@ -53,9 +51,15 @@ describe("Read input", () => {
   );
 
   it("should have same line and column as expected", () => {
-    expect(() => new Minesweeper("2 2\n...\n...")).toThrow();
-    expect(() => new Minesweeper("2 2\n..")).toThrow();
-    expect(() => new Minesweeper("2 2\n.*\n*.")).not.toThrow();
+    expect(() => new Minesweeper("2 2\n...\n...")).toThrow(
+      "Lines and columns doesn't match with length expected"
+    );
+    expect(() => new Minesweeper("2 2\n..")).toThrow(
+      "Lines and columns doesn't match with length expected"
+    );
+    expect(() => new Minesweeper("2 2\n.*\n*.")).not.toThrow(
+      "Lines and columns doesn't match with length expected"
+    );
   });
 
   // todo does not match with number of lines and columns
