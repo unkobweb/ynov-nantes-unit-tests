@@ -59,7 +59,7 @@ describe("Read input", () => {
         expect(() => new Minesweeper(input)).not.toThrow();
       } else {
         expect(() => new Minesweeper(input)).toThrow(
-          "Lines must contains * or . characters"
+          "All lines must be two number between ]0,100] separated by a space or ('.' or '*')"
         );
       }
     }
@@ -80,6 +80,16 @@ describe("Read input", () => {
   it("should have zero caracters at the end", () => {
     expect(() => new Minesweeper("2 2\n.*\n..")).toThrow(
       "Last line must be 0 0"
+    );
+  });
+
+  it("should handle multiple fields", () => {
+    expect(() => new Minesweeper("2 2\n.*\n..\n1 3\n..*\n0 0")).not.toThrow();
+    expect(() => new Minesweeper("1 1\n.\n*\n.\n0 0")).toThrow(
+      "Lines and columns doesn't match with length expected"
+    );
+    expect(() => new Minesweeper("2 2\n..\n.*\n2 3\n...\n0 0")).toThrow(
+      "Lines and columns doesn't match with length expected"
     );
   });
 });
