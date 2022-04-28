@@ -77,5 +77,9 @@ describe("Read input", () => {
     );
   });
 
-  // todo does not match with number of lines and columns
+  it("should have zero caracters at the end", () => {
+    expect(() => new Minesweeper(generatePlanGame(10, 4))).toThrow(
+      "Content must be ended by 0 0 caracters"
+    );
+  });
 });
