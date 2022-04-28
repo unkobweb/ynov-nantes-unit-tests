@@ -65,7 +65,15 @@ class Minesweeper {
   }
 
   solve() {
-    return "Field #1:\n";
+    const lines = this.input.split("\n");
+    const result = [];
+    lines.forEach((line) => {
+      if (this.firstLinePattern.test(line)) {
+        result.push(`Field #${result.length + 1}:\n`);
+      }
+    });
+
+    return result.join("\n");
   }
 }
 

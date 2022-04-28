@@ -107,8 +107,15 @@ describe("Read input", () => {
 });
 
 describe("Solving output", () => {
-  it("should return field with id", () => {
-    const field = new Minesweeper(`1 1\n.\n0 0`).solve();
-    expect(field).toContain("Field #1:\n");
-  });
+  const checkOutputHeading = [
+    ["1 1\n.\n0 0", "Field #1:\n"],
+    ["1 1\n.\n1 1\n.\n0 0", "Field #1:\n\nField #2:\n"],
+  ];
+  it.each(checkOutputHeading)(
+    "should return field with id",
+    (input, output) => {
+      const field = new Minesweeper(input).solve();
+      expect(field).toContain(output);
+    }
+  );
 });
