@@ -10,21 +10,27 @@ describe("Read input", () => {
 
   it("Check if first line of input is two numbers separate by a space", () => {
     expect(() => new Minesweeper(badField)).toThrow(
-      "First line must be two number separated by a space"
+      "First line must be two number greater than 0 and lower or equal than 100 separated by a space"
     );
   });
 
-  it("Check if first line number are greater than 0 and lower or equal than 100", () => {
-    expect(() => new Minesweeper("5 -1")).toThrow(
-      "First line numbers must be greater than 0 and lower or equal than 100"
-    );
-    expect(() => new Minesweeper("0 5")).toThrow(
-      "First line numbers must be greater than 0 and lower or equal than 100"
-    );
-    expect(() => new Minesweeper("1 120")).toThrow(
-      "First line numbers must be greater than 0 and lower or equal than 100"
-    );
-    expect(() => new Minesweeper("5 100"));
-    expect(() => new Minesweeper("4 4"));
-  });
+  const numberValueCheck = [
+    ["5 -1", false],
+    ["0 5", false],
+    ["1 120", false],
+    ["5 100", true],
+    ["4 4", true],
+  ];
+  it.each(numberValueCheck)(
+    "Check if first line number are greater than 0 and lower or equal than 100",
+    (input, valid) => {
+      if (valid) {
+        expect(() => new Minesweeper(input)).not.toThrow();
+      } else {
+        expect(() => new Minesweeper(input)).toThrow(
+          "First line must be two number greater than 0 and lower or equal than 100 separated by a space"
+        );
+      }
+    }
+  );
 });

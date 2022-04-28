@@ -10,17 +10,14 @@ class Minesweeper {
 
     const lines = input.split("\n");
 
-    const firstLinePattern = new RegExp(/^-?[0-9]+\s-?[0-9]+$/, "gm");
+    const firstLinePattern = new RegExp(
+      /^\b([1-9]|[1-9][0-9]|100)\b\s\b([1-9]|[1-9][0-9]|100)\b$/,
+      "gm"
+    );
 
     if (!firstLinePattern.test(lines[0])) {
-      throw new Error("First line must be two number separated by a space");
-    }
-
-    const numbers = lines[0].split(" ").map((nb) => parseInt(nb));
-
-    if (!numbers.every((num) => num > 0 && num <= 100)) {
       throw new Error(
-        "First line numbers must be greater than 0 and lower or equal than 100"
+        "First line must be two number greater than 0 and lower or equal than 100 separated by a space"
       );
     }
   }
