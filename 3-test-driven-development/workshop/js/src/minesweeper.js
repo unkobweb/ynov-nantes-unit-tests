@@ -64,12 +64,44 @@ class Minesweeper {
     this.checkField(field);
   }
 
+  checkForBombs(line) {
+    let result = "";
+
+    const positions = line.split("");
+    for (let i = 0; i < positions.length; i++) {
+      if (positions[i] === "*") {
+        result += "*";
+      } else {
+        let neerBombs = 0;
+        if (positions[i - 1] === "*") {
+          neerBombs++;
+        }
+        if (positions[i + 1] === "*") {
+          neerBombs++;
+        }
+        result += neerBombs;
+      }
+    }
+
+    return result;
+  }
+
   solve() {
     const lines = this.input.split("\n");
+    lines.pop();
     const result = [];
+
+    let fieldIndex = 1;
+
     lines.forEach((line) => {
       if (this.firstLinePattern.test(line)) {
-        result.push(`Field #${result.length + 1}:\n`);
+        if (fieldIndex !== 1) {
+          result.push("");
+        }
+        result.push(`Field #${fieldIndex}:`);
+        fieldIndex++;
+      } else {
+        result.push(this.checkForBombs(line));
       }
     });
 

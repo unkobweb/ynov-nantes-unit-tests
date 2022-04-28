@@ -108,18 +108,19 @@ describe("Read input", () => {
 
 describe("Solving output", () => {
   const checkOutputHeading = [
-    ["1 1\n.\n0 0", "Field #1:\n"],
-    ["1 1\n.\n1 1\n.\n0 0", "Field #1:\n\nField #2:\n"],
+    ["1 1\n.\n0 0", "Field #1:\n0"],
+    ["1 1\n.\n1 1\n.\n0 0", "Field #1:\n0\n\nField #2:\n0"],
   ];
   it.each(checkOutputHeading)(
     "should return field with id",
     (input, output) => {
       const field = new Minesweeper(input).solve();
-      expect(field).toContain(output);
+      expect(field).toEqual(expect.stringMatching(output));
     }
   );
+
   it("should set number instead of '.' with just one line", () => {
-    const result = new Minesweeper("1 7\n.*.*...*");
-    expect(result).toEqual("Field #1:\n1*2*101*\n");
+    const result = new Minesweeper("1 8\n.*.*...*\n0 0").solve();
+    expect(result).toEqual("Field #1:\n1*2*101*");
   });
 });
