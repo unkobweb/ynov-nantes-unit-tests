@@ -1,7 +1,19 @@
 const { Minesweeper } = require("../src/minesweeper.js");
 
-const goodField = "3 3\n*..\n...\n.*.\n0 0";
-const badField = "hello world!";
+const generatePlanGame = (linesNb, columnsNb) => {
+  let planGame = "";
+
+  for (let i = 0; i < linesNb; i++) {
+    for (let j = 0; j < columnsNb; j++) {
+      planGame += Math.random() > 0.5 ? "." : "*";
+    }
+    if (i + 1 !== linesNb) {
+      planGame += "\n";
+    }
+  }
+
+  return `${linesNb} ${columnsNb}\n` + planGame;
+};
 
 describe("Read input", () => {
   it("should throw an error if input is not a string", () => {
@@ -9,7 +21,7 @@ describe("Read input", () => {
   });
 
   it("Check if first line of input is two numbers separate by a space", () => {
-    expect(() => new Minesweeper(badField)).toThrow(
+    expect(() => new Minesweeper("hello world!")).toThrow(
       "First line must be two number greater than 0 and lower or equal than 100 separated by a space"
     );
   });
@@ -18,11 +30,14 @@ describe("Read input", () => {
     ["5 -1", false],
     ["0 5", false],
     ["1 120", false],
+    [generatePlanGame(1, 100), true],
+    [generatePlanGame(4, 4), true],
   ];
   it.each(numberValueCheck)(
     "Check if first line number are greater than 0 and lower or equal than 100",
     (input, valid) => {
       if (valid) {
+        console.log(input);
         expect(() => new Minesweeper(input)).not.toThrow();
       } else {
         expect(() => new Minesweeper(input)).toThrow(
