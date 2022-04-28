@@ -5,6 +5,8 @@ const badField = "hello world!";
 
 describe("Read input", () => {
   it("Check if first line of input is two numbers separate by a space", () => {
-    expect(() => new Minesweeper(badField)).toThrow();
+    expect(() => new Minesweeper(badField)).toThrow(
+      "First line must be two number separated by a space"
+    );
   });
 });
