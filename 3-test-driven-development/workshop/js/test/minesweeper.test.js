@@ -34,11 +34,23 @@ describe("Read input", () => {
     }
   );
 
-  it("should throw an error if lines not contains * or . characters ", () => {
-    expect(() => new Minesweeper("3 3\n-e-e-e")).toThrow(
-      "Lines must contains * or . characters"
-    );
-  });
+  const linesCheck = [
+    ["1 3\n-e-", false],
+    ["2 4\n_b__\n___b", false],
+    ["1 4\n...*", true],
+  ];
+  it.each(linesCheck)(
+    "should throw an error if lines not contains * or . characters ",
+    (input, valid) => {
+      if (valid) {
+        expect(() => new Minesweeper(input)).not.toThrow();
+      } else {
+        expect(() => new Minesweeper(input)).toThrow(
+          "Lines must contains * or . characters"
+        );
+      }
+    }
+  );
 
   // todo does not match with number of lines and columns
 });
