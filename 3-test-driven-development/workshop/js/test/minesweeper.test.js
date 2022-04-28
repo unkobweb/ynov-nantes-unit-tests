@@ -52,5 +52,11 @@ describe("Read input", () => {
     }
   );
 
+  it("should have same line and column as expected", () => {
+    expect(() => new Minesweeper("2 2\n...\n...")).toThrow();
+    expect(() => new Minesweeper("2 2\n..")).toThrow();
+    expect(() => new Minesweeper("2 2\n.*\n*.")).not.toThrow();
+  });
+
   // todo does not match with number of lines and columns
 });
