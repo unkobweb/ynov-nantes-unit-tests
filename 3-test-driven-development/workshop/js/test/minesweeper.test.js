@@ -65,17 +65,25 @@ describe("Read input", () => {
     }
   );
 
-  it("should have same line and column as expected", () => {
-    expect(() => new Minesweeper("2 2\n...\n...\n0 0")).toThrow(
-      "Lines and columns doesn't match with length expected"
-    );
-    expect(() => new Minesweeper("2 2\n..\n0 0")).toThrow(
-      "Lines and columns doesn't match with length expected"
-    );
-    expect(() => new Minesweeper("2 2\n.*\n*.\n0 0")).not.toThrow(
-      "Lines and columns doesn't match with length expected"
-    );
-  });
+  const linesLengthCheck = [
+    ["2 2\n...\n...\n0 0", false],
+    ["2 2\n..\n0 0", false],
+    ["2 2\n.*\n*.\n0 0", true],
+  ];
+  it.each(linesLengthCheck)(
+    "should have same line and column as expected",
+    (input, valid) => {
+      if (valid) {
+        expect(() => new Minesweeper(input)).not.toThrow(
+          "Lines and columns doesn't match with length expected"
+        );
+      } else {
+        expect(() => new Minesweeper(input)).toThrow(
+          "Lines and columns doesn't match with length expected"
+        );
+      }
+    }
+  );
 
   it("should have zero caracters at the end", () => {
     expect(() => new Minesweeper("2 2\n.*\n..")).toThrow(
@@ -83,13 +91,18 @@ describe("Read input", () => {
     );
   });
 
-  it("should handle multiple fields", () => {
-    expect(() => new Minesweeper("2 2\n.*\n..\n1 3\n..*\n0 0")).not.toThrow();
-    expect(() => new Minesweeper("1 1\n.\n*\n.\n0 0")).toThrow(
-      "Lines and columns doesn't match with length expected"
-    );
-    expect(() => new Minesweeper("2 2\n..\n.*\n2 3\n...\n0 0")).toThrow(
-      "Lines and columns doesn't match with length expected"
-    );
+  const handleMultiple = [
+    ["2 2\n.*\n..\n1 3\n..*\n0 0", true],
+    ["1 1\n.\n*\n.\n0 0", false],
+    ["2 2\n..\n.*\n2 3\n...\n0 0", false],
+  ];
+  it.each(handleMultiple)("should handle multiple fields", (input, valid) => {
+    if (valid) {
+      expect(() => new Minesweeper(input)).not.toThrow();
+    } else {
+      expect(() => new Minesweeper(input)).toThrow(
+        "Lines and columns doesn't match with length expected"
+      );
+    }
   });
 });

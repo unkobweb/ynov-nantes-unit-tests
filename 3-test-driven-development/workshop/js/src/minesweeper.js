@@ -19,10 +19,6 @@ class Minesweeper {
     ) {
       throw new Error("Lines and columns doesn't match with length expected");
     }
-
-    // if (!lines.every((line) => this.planGamePattern.test(line))) {
-    //   throw new Error("Lines must contains * or . characters");
-    // }
   }
 
   checkInput(input) {
