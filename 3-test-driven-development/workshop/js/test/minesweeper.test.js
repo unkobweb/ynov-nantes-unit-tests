@@ -106,3 +106,10 @@ describe("Read input", () => {
     }
   });
 });
+
+desribe("Solving output", () => {
+  it("should return field with id", () => {
+    const field = new Minesweeper(`1 1\n.\n0 0`).solve();
+    expect(field).stringContaining("Field #1:\n");
+  });
+});
