@@ -37,7 +37,6 @@ describe("Read input", () => {
     "Check if first line number are greater than 0 and lower or equal than 100",
     (input, valid) => {
       if (valid) {
-        console.log(input);
         expect(() => new Minesweeper(input)).not.toThrow();
       } else {
         expect(() => new Minesweeper(input)).toThrow(
@@ -107,9 +106,9 @@ describe("Read input", () => {
   });
 });
 
-desribe("Solving output", () => {
+describe("Solving output", () => {
   it("should return field with id", () => {
     const field = new Minesweeper(`1 1\n.\n0 0`).solve();
-    expect(field).stringContaining("Field #1:\n");
+    expect(field).toContain("Field #1:\n");
   });
 });

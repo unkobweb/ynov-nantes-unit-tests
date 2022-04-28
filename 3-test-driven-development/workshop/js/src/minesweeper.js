@@ -5,6 +5,7 @@ class Minesweeper {
       /^\b([1-9]|[1-9][0-9]|100)\b\s\b([1-9]|[1-9][0-9]|100)\b$/
     );
     this.checkInput(input);
+    this.input = input;
   }
 
   checkField(lines) {
@@ -61,6 +62,10 @@ class Minesweeper {
     }
 
     this.checkField(field);
+  }
+
+  solve() {
+    return "Field #1:\n";
   }
 }
 
