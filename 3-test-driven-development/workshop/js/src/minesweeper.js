@@ -20,6 +20,13 @@ class Minesweeper {
         "First line must be two number greater than 0 and lower or equal than 100 separated by a space"
       );
     }
+
+    lines.shift();
+    const planGamePattern = new RegExp(/^(\.|\*)+$/);
+
+    if (!lines.every((line) => planGamePattern.test(line))) {
+      throw new Error("Lines must contains * or . characters");
+    }
   }
 }
 
