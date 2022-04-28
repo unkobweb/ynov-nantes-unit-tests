@@ -64,6 +64,71 @@ class Minesweeper {
     this.checkField(field);
   }
 
+  checkForBombs(line, lineIndex, lines) {
+    const caracters = line.split("");
+    let resultLine = "";
+
+    caracters.forEach((caracter, j) => {
+      if (caracter === "*") {
+        resultLine += "*";
+      } else {
+        let neerBombs = 0;
+        const northLines = lines[lineIndex - 1];
+        const southLines = lines[lineIndex + 1];
+        const eastLines = caracters[j + 1];
+        const westLines = caracters[j - 1];
+
+        if (northLines) {
+          // N
+          if (northLines.split("")[j] === "*") {
+            neerBombs++;
+          }
+
+          // NW
+          if (northLines.split("")[j - 1] === "*") {
+            neerBombs++;
+          }
+
+          // NE
+          if (northLines.split("")[j + 1] === "*") {
+            neerBombs++;
+          }
+        }
+
+        if (southLines) {
+          // S
+          if (southLines.split("")[j] === "*") {
+            neerBombs++;
+          }
+
+          // SW
+          if (southLines.split("")[j - 1] === "*") {
+            neerBombs++;
+          }
+
+          // SE
+          if (southLines.split("")[j + 1] === "*") {
+            neerBombs++;
+          }
+        }
+
+        // W
+        if (westLines === "*") {
+          neerBombs++;
+        }
+
+        // E
+        if (eastLines === "*") {
+          neerBombs++;
+        }
+
+        resultLine += neerBombs;
+      }
+    });
+
+    return resultLine;
+  }
+
   solve() {
     const lines = this.input.split("\n");
     lines.pop();
@@ -79,63 +144,7 @@ class Minesweeper {
         result.push(`Field #${fieldIndex}:`);
         fieldIndex++;
       } else {
-        const caracters = line.split("");
-        let resultLine = "";
-
-        caracters.forEach((caracter, j) => {
-          if (caracter === "*") {
-            resultLine += "*";
-          } else {
-            let neerBombs = 0;
-
-            if (lines[i - 1]) {
-              // N
-              if (lines[i - 1].split("")[j] === "*") {
-                neerBombs++;
-              }
-
-              // NW
-              if (lines[i - 1].split("")[j - 1] === "*") {
-                neerBombs++;
-              }
-
-              // NE
-              if (lines[i - 1].split("")[j + 1] === "*") {
-                neerBombs++;
-              }
-            }
-
-            if (lines[i + 1]) {
-              // S
-              if (lines[i + 1].split("")[j] === "*") {
-                neerBombs++;
-              }
-
-              // SW
-              if (lines[i + 1].split("")[j - 1] === "*") {
-                neerBombs++;
-              }
-
-              // SE
-              if (lines[i + 1].split("")[j + 1] === "*") {
-                neerBombs++;
-              }
-            }
-
-            // W
-            if (caracters[j - 1] === "*") {
-              neerBombs++;
-            }
-
-            // E
-            if (caracters[j + 1] === "*") {
-              neerBombs++;
-            }
-
-            resultLine += neerBombs;
-          }
-        });
-        result.push(resultLine);
+        result.push(this.checkForBombs(line, i, lines));
       }
     });
 
