@@ -4,6 +4,10 @@ class Minesweeper {
   }
 
   checkInput(input) {
+    if (typeof input !== "string") {
+      throw new Error("First line must be a string");
+    }
+
     const lines = input.split("\n");
 
     const firstLinePattern = new RegExp(/^[0-9]+\s[0-9]+$/, "gm");
