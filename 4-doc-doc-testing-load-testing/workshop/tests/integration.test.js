@@ -21,6 +21,7 @@ beforeAll(async () => {
 describe('Tasks', () => {
     it('should return all tasks', async () => {
         const {body} = await request(app).get('/todo');
+        console.log(body)
         expect(body[0].text).toBe('Wash the kitchen floor');
     })
     

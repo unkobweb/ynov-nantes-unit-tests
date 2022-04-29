@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const ToDo = require('./toDoModel.js').ToDo;
+const toDoService = require('./services/toDoService');
 
 const app = express();
 
@@ -8,25 +8,21 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static(__dirname + '/public'));
 
-app.get('/todo', (req, res) => {
-  ToDo.find()
-    .then((toDos) => res.status(200).send(toDos))
-    .catch((err) => res.status(400).send(err));
+app.get('/todo', async (req, res) => {
+  await toDoService.getTasks()
+    .then(toDos => res.status(200).send(toDos))
+    .catch (err => res.status(400).send(err)) 
 });
 
-app.post('/todo', (req, res) => {
-  const body = req.body;
-  const toDo = new ToDo({
-    text: body.text,
-  });
-  toDo.save(toDo)
+app.post('/todo', async (req, res) => {
+  await toDoService.createTask(req.body)
     .then((savedToDo) => res.status(201).send(savedToDo))
     .catch((err) => res.status(400).send(err));
 });
 
-app.patch('/todo/:id', (req, res) => {
+app.patch('/todo/:id', async (req, res) => {
   const { id } = req.params;
-  ToDo.findOneAndUpdate({ _id: id }, { done: true })
+  await toDoService.markTaskAsDone(id)
     .then((toDo) => res.status(200).send(toDo))
     .catch((err) => res.status(400).send(err));
 });
