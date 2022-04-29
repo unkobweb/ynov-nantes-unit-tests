@@ -1,7 +1,7 @@
 const request = require('supertest');
 const app = require('../app');
 const mongoose = require("mongoose");
-const { ToDo } = require('../toDoModel');
+const ToDo = require('../toDoModel');
 
 beforeAll(async () => {
     // Connect to MongoDB
@@ -21,7 +21,6 @@ beforeAll(async () => {
 describe('Tasks', () => {
     it('should return all tasks', async () => {
         const {body} = await request(app).get('/todo');
-        console.log(body)
         expect(body[0].text).toBe('Wash the kitchen floor');
     })
     

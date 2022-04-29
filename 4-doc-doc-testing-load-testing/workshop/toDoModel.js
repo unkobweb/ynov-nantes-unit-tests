@@ -12,6 +12,4 @@ const ToDoSchema = new mongoose.Schema({
   },
 });
 
-const ToDo = mongoose.model('ToDo', ToDoSchema)
-
-module.exports = { ToDo };
+module.exports = mongoose.model('ToDo', ToDoSchema);

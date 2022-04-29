@@ -1,4 +1,4 @@
-const ToDo = require('../toDoModel.js').ToDo;
+const ToDo = require('../toDoModel.js');
 
 const getTasks = () => {
     return ToDo.find({});
